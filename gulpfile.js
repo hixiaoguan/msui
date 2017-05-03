@@ -6,69 +6,80 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     uglify = require('gulp-uglify'),
     usemin = require('gulp-usemin'),
-    htmlmin = require('gulp-htmlmin');
+    htmlmin = require('gulp-htmlmin'),
+    px2rem = require('gulp-px2rem-plugin');
 //路径设定
 var path = 'myweb1';
 var paths = {
-    distRoot: 'dist/'+path,
-    srcRoot: 'src/'+path,
-    lessRoot: 'less/'
-}
-//清理HTML
-gulp.task('htmlmin', function () {
+        distRoot: 'dist/' + path,
+        srcRoot: 'src/' + path,
+        lessRoot: 'less/'
+    }
+    //压缩HTML
+gulp.task('htmlmin', function() {
     var options = {
-        removeComments: true,//清除HTML注释
-        collapseWhitespace: true,//压缩HTML
-        collapseBooleanAttributes: true,//省略布尔属性的值 <input checked="true"/> ==> <input />
-        removeEmptyAttributes: true,//删除所有空格作属性值 <input id="" /> ==> <input />
-        removeScriptTypeAttributes: true,//删除<script>的type="text/javascript"
-        removeStyleLinkTypeAttributes: true,//删除<style>和<link>的type="text/css"
-        minifyJS: true,//压缩页面JS
-        minifyCSS: true//压缩页面CSS
+        removeComments: true, //清除HTML注释
+        collapseWhitespace: true, //压缩HTML
+        collapseBooleanAttributes: true, //省略布尔属性的值 <input checked="true"/> ==> <input />
+        removeEmptyAttributes: true, //删除所有空格作属性值 <input id="" /> ==> <input />
+        removeScriptTypeAttributes: true, //删除<script>的type="text/javascript"
+        removeStyleLinkTypeAttributes: true, //删除<style>和<link>的type="text/css"
+        minifyJS: true, //压缩页面JS
+        minifyCSS: true //压缩页面CSS
     };
-    gulp.src(paths.srcRoot+'/*.html')
+    gulp.src(paths.srcRoot + '/*.html')
         .pipe(htmlmin(options))
         .pipe(gulp.dest(paths.distRoot));
 });
 //编译less文件
-gulp.task('less', function(){
-    return gulp.src(paths.lessRoot+path+'.less')
+gulp.task('less', function() {
+    return gulp.src(paths.lessRoot + path + '.less')
         .pipe(less())
-        .pipe(gulp.dest(paths.srcRoot+'/css'));
+        .pipe(
+            px2rem({
+                'width_design': 320, // width_design：设计稿宽度。默认值640
+                'valid_num': 6, // valid_num：生成rem后的小数位数。默认值4
+                'pieces': 10, // pieces：将整屏切份。默认为10，相当于10rem = width_design(设计稿宽度)
+                'ignore_px': [1, 2], // ignore_px：让部分px不在转换成rem。默认为空数组
+                'ignore_selector': ['.class1', '.b'] // ignore_selector：让部分选择器不在转换为rem。默认为空数组
+            })
+        )
+        .pipe(gulp.dest(paths.srcRoot + '/css'));
 });
 
 //删除dist目录
 gulp.task('del', function() {
-    return gulp.src(paths.distRoot, {read: false})
+    return gulp.src(paths.distRoot, { read: false })
         .pipe(del());
 });
 
 //图片压缩
 gulp.task('minifyimages', function() {
-    return gulp.src(paths.srcRoot+'/images/**')
+    return gulp.src(paths.srcRoot + '/images/**')
         .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-        .pipe(gulp.dest(paths.distRoot+'/images'));
+        .pipe(gulp.dest(paths.distRoot + '/images'));
 });
 
-//HTML资源路径调整
+//HTML资源打包
 gulp.task('usemin', function() {
-    return gulp.src(paths.srcRoot+'/*.html')
+    return gulp.src(paths.srcRoot + '/*.html')
         .pipe(usemin({
-            css: [ cssmin ],
-            js: [ uglify ]
+            css: [cssmin],
+            js: [uglify]
         }))
         .pipe(gulp.dest(paths.distRoot));
 });
+
 //font字体文件拷贝
 gulp.task('copy', function() {
-    return gulp.src(paths.srcRoot+'/font/**')
-        .pipe(gulp.dest(paths.distRoot+'/font'));
+    return gulp.src(paths.srcRoot + '/font/**')
+        .pipe(gulp.dest(paths.distRoot + '/font'));
 });
 
 //打包到dist目录
-gulp.task('dist', [ 'del','less','usemin','htmlmin','minifyimages','copy']);
+gulp.task('dist', ['del', 'less', 'usemin', 'htmlmin', 'minifyimages', 'copy']);
 //监控
 gulp.task('watch', function() {
     //监控所有.less
-    gulp.watch(paths.lessRoot+'*.less', ['less']);
+    gulp.watch(paths.lessRoot + '*.less', ['less']);
 });

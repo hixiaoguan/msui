@@ -1,3 +1,17 @@
 body {
   color: #333;
 }
+.a {
+  width: 20.000000rem;
+  max-width: 15.000000rem;
+  height: 6.250000rem;
+}
+.b {
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+}
+.class1 {
+  width: 400px;
+  height: 200px;
+}

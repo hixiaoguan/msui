@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>MSUI</title>
@@ -17,8 +18,9 @@
     <!-- build:css css/myweb1.min.css -->
     <link rel="stylesheet" href="css/myweb1.css">
     <!-- endbuild -->
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- page集合的容器，里面放多个平行的.page，其他.page作为内联页面由路由控制展示 -->
     <div class="page-group">
         <!-- 单个page ,第一个.page默认被展示-->
@@ -48,16 +50,15 @@
             <!-- 这里是页面内容区 -->
             <div class="content">
                 <div class="content-block">
-			        <!-- 你的html代码 -->
-			        <h2>MSUI v0.6.2, It Works !</h2>
-					<p>
-						SUI Mobile 是一套基于 Framework7 开发的UI库。它非常轻量、精美，只需要引入我们的CDN文件就可以使用，并且能兼容到 iOS 6.0+ 和 Android 4.0+，非常适合开发跨平台Web App。
-					</p>
-			        
-					<p>
-						轻量的UI库 SUI Mobile 非常轻量，核心库压缩Gzip后的JS、CSS网络传输体积总共只有52K，却提供了20+个常用的组件。<br>
-						对于只有HTML&CSS的组件，你只需要复制HTML代码既可以使用。他的大部分JS组件都是独立的 Zepto 插件，并且提供了 Zepto/jQuery 风格的API，你将会非常熟悉这种方式。
-					</p>
+                    <!-- 你的html代码 -->
+                    <h2>MSUI v0.6.2, It Works !</h2>
+                    <p>
+                        SUI Mobile 是一套基于 Framework7 开发的UI库。它非常轻量、精美，只需要引入我们的CDN文件就可以使用，并且能兼容到 iOS 6.0+ 和 Android 4.0+，非常适合开发跨平台Web App。
+                    </p>
+
+                    <p>
+                        轻量的UI库 SUI Mobile 非常轻量，核心库压缩Gzip后的JS、CSS网络传输体积总共只有52K，却提供了20+个常用的组件。<br> 对于只有HTML&CSS的组件，你只需要复制HTML代码既可以使用。他的大部分JS组件都是独立的 Zepto 插件，并且提供了 Zepto/jQuery 风格的API，你将会非常熟悉这种方式。
+                    </p>
                 </div>
             </div>
         </div>
@@ -87,5 +88,9 @@
     <!-- build:js js/sm-extend.min.js -->
     <script type='text/javascript' src='js/sm-extend.js' charset='utf-8'></script>
     <!-- endbuild -->
-  </body>
+    <!-- build:js lib/sui-font-reset.min.js -->
+    <script type='text/javascript' src='lib/sui-font-reset.js' charset='utf-8'></script>
+    <!-- endbuild -->
+</body>
+
 </html>
